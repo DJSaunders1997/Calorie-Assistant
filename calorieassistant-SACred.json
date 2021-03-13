@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "calorieassistant-307512",
+  "private_key_id": "53004be21090a214d0e6d076816536882ec7e68b",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEuwIBADANBgkqhkiG9w0BAQEFAASCBKUwggShAgEAAoIBAQDJkCsjmQerRZRG\n1xrpynCnzm7UZnsA56zr1eznmzofkHcYSyPvjvFO5XwbttAaSz7snHZzOLH4z2gF\n6+qgbpp1DBh3PzOHCOK7ybxlEm+BKAeAUq/IC9mocmjAudUoD9jPs7smW85mDuHA\nFXKOxoqULzjd32hXhpDzkGxQvxpCe9hRCiL9cKSJUU8z6+SBo5eoEkgFJKMLe6YA\n8l4TxT9u62jyPkBcFbRpiw4Sf3+yWo7kOKFqkPzfh7u+7gGLwmT2JYmt3c2Ol9oB\nC/jnxuv4SsW0LpFOiiIPXXPpyGyjrVEEPpoMpgg3RVR35Bl/qTkQGv5XlWrym9ds\notu89gpXAgMBAAECgf94JrEm5N58n7oUQQXIs8iQ0wAeSF971NifzHW3JgHNpMhG\n/jR8OIhwVn4Psr6Ry6f0zTV/dwPSMau03pROrHgm1tuEo33YYTLxRLCWIxv4dCoU\nYuv0Yj5OhkOupCp4DN/Yyy8CeyuPOVe1OgaH6zurDIsHrN8TOH8NOtQUdawoZeXI\nvmMXGD2DJwT0RVoQEj1n3nCkbJ9+urKN0Qn0spH5vOfndN0Cizz5qb11VoO5FYub\n3lMBQ7yp3aZvpF6fcImpiF4MAUB57/HJ8qyYb3ZKkrzmc4U1Yg4CmZddbn0lAfxo\njvF7vWIZFB9jZW/pnhxvqlL14AP7dchPy4I9L3ECgYEA5jB95QL04aSb/2/wpLj/\nsEM8pQgMS2SE2zcLSI1JGr+oze/D3aIJPlu4fUM4oRfddu8g5pa60CvsDwT2WS1X\nAZ7w8HQV8aAdC1xBeDJVjIXuH9DZYNgI6HqPdYeUXIuAvEiZQlmXr9iywsGt968v\nwqkK4iyh8XPVAuTPlNrGJGcCgYEA4Cn4Plxf0AWb9PAxG/7OO/5Ll6InyD6C+jOd\n7/jPgG9XkzJLXzP//aCIOBfpe24wFMwcfE31dfOQLxG2jxkwsI2xvivdkFxYSnAe\nr0DBZHz7ZV9sLVdfae8XATNtTT2a2N3OQlBpwO9zecewvUqlKQqBtmmwitjr1knO\nt+fltJECgYAOqRv7j/qkvGUrGagL9bRjN4UPRbnyu04y4AiZ8FWtnHNV2mVxIjbQ\nf+r6H2Pl7q0uPACubv8q7wEz268M8vRNqB/UULBtGTOAW7nXu+zy7DzETfrqThgT\nJmsoox/x3PiwBTetoCMnEfggq1E3KzMxhK6qxQjzZds1Ofl2k5B3FQKBgBZaOQXG\n4kr09Ds1ZEA9ZUU4M0N4iOz/xsG6Oep+7foJoDruTfO9VK5uvoaRY9fKAgNg4wpG\nH87WLa9z3bdhNKi2SF4FM7+8ZZVunrCtDVu+1raiEEBpMPt4OtwEy8Zi+TjczT9x\nk0oI1oPzNJ17fwKbqJmO6mq9/K5Oh81w00fxAoGBANDtir7ZtRMkfsQVsmltLP/A\ndWGMhhjUm09X1brQgA//S7nDpnQ0pqm7QY5zFIBqnMenRWZghgLkcJTQ0fRJV/vv\n6iFzQBaO/nY3Ve911LHsEgKAxCYKwOy5AmZtmk3oc8joZvwZlsddBYNNoSz/tz2p\nO3lerKAOlwTreJL+CwHQ\n-----END PRIVATE KEY-----\n",
+  "client_email": "calorieassistantserviceaccount@calorieassistant-307512.iam.gserviceaccount.com",
+  "client_id": "100981794100773061090",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/calorieassistantserviceaccount%40calorieassistant-307512.iam.gserviceaccount.com"
+}
