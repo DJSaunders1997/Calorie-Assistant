@@ -6,22 +6,27 @@
 import speech_recognition as sr
 import re # Regular Expressions
 from win32com.client import Dispatch
+# Google sheets integration imports
+import gspread
+import datetime
+from gspread_formatting import *
+
+# Connecting to googlesheets
+gc = gspread.service_account(filename='calorieassistant-SACred.json')
+sh = gc.open('CaloriesSheet') # Open spreadsheet
+worksheet = sh.get_worksheet(0) # First Worksheet Dave Calories 
 
 # Seeing what microphones we have available
-
 for index, name in enumerate(sr.Microphone.list_microphone_names()):
     print(f"Microphone with name \"{name}\" found for `Microphone(device_index={index})`".format(index, name))
 
 # Create Speaking function
-
 # This is windows only at the moment, will have to change if I deploy on pi
 def speak(text):
     print(f'Speaking:: {text}')
     Dispatch("SAPI.SpVoice").Speak(text)
 
-speak("Boo lets go for a walk") # test
-
-
+speak("Testing mic is working") # test
 
 def get_audio():
     r = sr.Recognizer()
@@ -41,7 +46,6 @@ def get_audio():
 # Adding calories logic
 
 def calorie_events(text, total_calories):
-
     if 'add' in text:
         print('Adding calories')
 
@@ -100,6 +104,7 @@ while True:
 
     # Wake word detection
     # TODO: See if I can bypass the 'Yo watup' and add calores straight away if calories keyword is detected
+    # Add more logic for Adding based on names such as meg or dave
     if wake_word in background_speech:
         print("Wakeword heard")
         speak("Yo watup")
