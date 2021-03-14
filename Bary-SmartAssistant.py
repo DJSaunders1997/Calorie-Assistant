@@ -179,27 +179,23 @@ def query_calories():
     return(total_calories)    ## Return this so Barry can say how many calories I have left
 
 
-def calorie_events(text, total_calories):
+def calorie_events(text):
     """
     Function is called when the assistant detects the word 'Calories' in the command.
-    #TODO: Since using the google sheets integration I don't think the total_calories parameter needs to be passed.
     """
     if 'add' in text:
         print('Adding calories')
-
         reg_ex = re.search(r'\d+', text) # search for any digits
 
         # If digits were found
         if reg_ex:
-            calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one
-            
-            speak(f'Adding {calorie_amount} to your daily total')
-            total_calories = total_calories + int(calorie_amount)
-            speak(f'Total calorie consumed is now {total_calories}')
+            calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one            
+            speak(f'Adding {calorie_amount} to your daily total')            
 
             # Adding Cloud integration
             cloudCalories = add_calories(int(calorie_amount))
             speak(f'On Google Sheets you have {cloudCalories} calories logged')
+            speak(f'Total calorie consumed is now {cloudCalories}')
 
         # If no digits were found
         else:
@@ -213,15 +209,12 @@ def calorie_events(text, total_calories):
 
         # If digits were found
         if reg_ex:
-            calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one
-            
+            calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one            
             speak(f'Taking away {calorie_amount} from your daily total')
-            total_calories = total_calories - int(calorie_amount)
-            speak(f'Total calorie consumed is now {total_calories}')
 
             # Cloud integration
             cloudCalories = remove_calories(int(calorie_amount))
-            speak(f'On Google Sheets you have {cloudCalories} calories logged')
+            speak(f'Total calorie consumed is now {cloudCalories}')
 
         # If no digits were found
         else:
@@ -239,14 +232,8 @@ def calorie_events(text, total_calories):
     else:
         speak('Please specify what calorie action you would like to perform')
 
-    return total_calories   # Need to return so next runthough will be able to know calories
-
 
 wake_word = 'barry' # name needs to lowercase!!
-
-# initilise calories outside of loop so it should increase
-total_calories = 0
-
 
 while True:
     print("Listening")
@@ -263,10 +250,10 @@ while True:
         text = get_audio()
 
         if 'calorie' in text: # Changed from calories as sometimes the s isnt understood
-            total_calories = calorie_events(text, total_calories)
+            calorie_events(text)
             
         else:
-            speak('You didnt say any phrases I can respond to yet. Sorry!')
+            speak("You didn't say any phrases I can respond to yet. Sorry!")
 
     
 
