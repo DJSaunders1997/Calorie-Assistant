@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/sudo /usr/bin/python
 
 # Using this article as a reference
 # https://www.techwithtim.net/tutorials/voice-assistant/wake-keyword/
