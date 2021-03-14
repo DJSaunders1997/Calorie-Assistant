@@ -24,7 +24,7 @@ import datetime
 from gspread_formatting import *
 
 # Connecting to googlesheets
-gc = gspread.service_account(filename='calorieassistant-SACred.json')
+gc = gspread.service_account(filename='/home/pi/Calorie-Assistant/calorieassistant-SACred.json')
 sh = gc.open('CaloriesSheet') # Open spreadsheet
 worksheet = sh.get_worksheet(0) # First Worksheet Dave Calories 
 
