@@ -8,8 +8,8 @@ import re # Regular Expressions
 
 # Platform agnostic TTS using googles library
 from gtts import gTTS
-from io import BytesIO
 from pygame import mixer
+mixer.init() # Needs to be initilised only once
 
 # Google sheets integration imports
 import gspread
@@ -35,11 +35,11 @@ def speak(text):
     tts = gTTS(text=text, lang='en')
     filename = 'temp.mp3'
     tts.save(filename)
-    pygame.mixer.music.load("temp.mp3")
-    pygame.mixer.music.play()
+    mixer.music.load("temp.mp3")
+    mixer.music.play()
 
     # Loops while sound is playing
-    while pygame.mixer.music.get_busy() == True:
+    while mixer.music.get_busy() == True:
         continue
 
 
