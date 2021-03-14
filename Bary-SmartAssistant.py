@@ -5,7 +5,12 @@
 
 import speech_recognition as sr
 import re # Regular Expressions
-from win32com.client import Dispatch
+
+# Platform agnostic TTS using googles library
+from gtts import gTTS
+from io import BytesIO
+from pygame import mixer
+
 # Google sheets integration imports
 import gspread
 import datetime
@@ -21,12 +26,27 @@ for index, name in enumerate(sr.Microphone.list_microphone_names()):
     print(f"Microphone with name \"{name}\" found for `Microphone(device_index={index})`".format(index, name))
 
 # Create Speaking function
-# This is windows only at the moment, will have to change if I deploy on pi
+# Updated to be os agnostic
+# TODO: See if there are better alternatives, she sounds slow and drunk
 def speak(text):
+    # Use gTTS to Store Speech on Buffer 
+    # This avoids us from having to save a file each time
+    # https://stackoverflow.com/questions/58614450/is-there-a-module-that-allows-me-to-make-python-say-things-as-audio-through-the
+    
     print(f'Speaking:: {text}')
-    Dispatch("SAPI.SpVoice").Speak(text)
+    
+    tts = gTTS(text=text, lang='en')
 
-speak("Testing mike is working") # test
+    mp3 = BytesIO()
+    tts.write_to_fp(mp3)
+    mp3.seek(0)
+
+    # Play from Buffer
+    mixer.init(frequency=100000)
+    mixer.music.load(mp3)
+    mixer.music.play()
+
+speak("Initilising") # test
 
 def get_audio():
     r = sr.Recognizer()
