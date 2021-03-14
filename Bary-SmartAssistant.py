@@ -22,29 +22,26 @@ sh = gc.open('CaloriesSheet') # Open spreadsheet
 worksheet = sh.get_worksheet(0) # First Worksheet Dave Calories 
 
 # Seeing what microphones we have available
-for index, name in enumerate(sr.Microphone.list_microphone_names()):
-    print(f"Microphone with name \"{name}\" found for `Microphone(device_index={index})`".format(index, name))
+# for index, name in enumerate(sr.Microphone.list_microphone_names()):
+#     print(f"Microphone with name \"{name}\" found for `Microphone(device_index={index})`".format(index, name))
 
 # Create Speaking function
 # Updated to be os agnostic
 # TODO: See if there are better alternatives, she sounds slow and drunk
 def speak(text):
-    # Use gTTS to Store Speech on Buffer 
-    # This avoids us from having to save a file each time
-    # https://stackoverflow.com/questions/58614450/is-there-a-module-that-allows-me-to-make-python-say-things-as-audio-through-the
-    
+    # Removed buffer so now a tempary file temp.mp3 is created
     print(f'Speaking:: {text}')
     
     tts = gTTS(text=text, lang='en')
+    filename = 'temp.mp3'
+    tts.save(filename)
+    pygame.mixer.music.load("temp.mp3")
+    pygame.mixer.music.play()
 
-    mp3 = BytesIO()
-    tts.write_to_fp(mp3)
-    mp3.seek(0)
+    # Loops while sound is playing
+    while pygame.mixer.music.get_busy() == True:
+        continue
 
-    # Play from Buffer
-    mixer.init(frequency=100000)
-    mixer.music.load(mp3)
-    mixer.music.play()
 
 speak("Initilising") # test
 
