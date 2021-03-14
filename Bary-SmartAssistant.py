@@ -207,16 +207,15 @@ def calorie_events(text):
         # If digits were found
         if reg_ex:
             calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one            
-            speak(f'Adding {calorie_amount} to your daily total')            
+            speak(f'Adding {calorie_amount} calories')            
 
             # Adding Cloud integration
             cloudCalories = add_calories(int(calorie_amount))
-            speak(f'On Google Sheets you have {cloudCalories} calories logged')
-            speak(f'Total calorie consumed is now {cloudCalories}')
+            speak(f'You have {cloudCalories} calories logged')
 
         # If no digits were found
         else:
-            speak('No numbers were said, so I cant add anything sorry!')
+            speak('No numbers were said.')
     
     # Reducing calories function
     elif ('minus' in text) or ('take away' in text) or ('takeaway' in text) or ('reduce' in text) or ('remove' in text):
@@ -227,21 +226,21 @@ def calorie_events(text):
         # If digits were found
         if reg_ex:
             calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one            
-            speak(f'Taking away {calorie_amount} from your daily total')
+            speak(f'Taking away {calorie_amount} calories')
 
             # Cloud integration
             cloudCalories = remove_calories(int(calorie_amount))
-            speak(f'Total calorie consumed is now {cloudCalories}')
+            speak(f'You have {cloudCalories} calories logged')
 
         # If no digits were found
         else:
-            speak('No numbers were said, so I cant add anything sorry!')    
+            speak('No numbers were said.')    
     
     #TODO: Implement a path asking how many calories you have + how many calories remaining.
     elif ('how many' in text) or ('how much' in text):
         print('Querying how many calories have been stored')
         total_calories = query_calories()
-        speak(f'You have consumed {total_calories} calories')
+        speak(f'You have {total_calories} calories logged')
 
     #IDEA: Maybe I should have a feature asking how many more calories you can consume in a day?
     # For example if you have consummed 1800 calories then you have 200 left.
@@ -270,7 +269,7 @@ while True:
             calorie_events(text)
             
         else:
-            speak("You didn't say any phrases I can respond to yet. Sorry!")
+            speak("Sorry I didnt catch that")
 
     
 
