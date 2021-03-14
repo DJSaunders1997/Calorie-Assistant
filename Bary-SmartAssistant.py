@@ -306,7 +306,7 @@ while True:
             calorie_events(text)
             
         else:
-            speak("Sorry I didnt catch that")
+            speak("Sorry I didn't catch that")
 
     try:
         pixels.off()
