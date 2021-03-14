@@ -219,7 +219,7 @@ def calorie_events(text):
             speak('No numbers were said, so I cant add anything sorry!')
     
     # Reducing calories function
-    elif ('minus' in text) or ('take away' in text) or ('takeaway' in text) or ('reduce' in text):
+    elif ('minus' in text) or ('take away' in text) or ('takeaway' in text) or ('reduce' in text) or ('remove' in text):
         print('Reducing calories')
 
         reg_ex = re.search(r'\d+', text) # search for any digits
