@@ -11,6 +11,13 @@ from gtts import gTTS
 from pygame import mixer
 mixer.init() # Needs to be initilised only once
 
+# Adding library's for RESPEAKER colours
+import time
+from pixels import Pixels, pixels   # Local library needs files in repo
+from google_home_led_pattern import GoogleHomeLedPattern # Local library needs files in repo
+
+pixels.pattern = GoogleHomeLedPattern(show=pixels.show) # Initilise patern to be googles
+
 # Google sheets integration imports
 import gspread
 import datetime
@@ -30,6 +37,13 @@ worksheet = sh.get_worksheet(0) # First Worksheet Dave Calories
 # TODO: See if there are better alternatives, she sounds slow and drunk
 def speak(text):
     # Removed buffer so now a tempary file temp.mp3 is created
+
+    # Wrap in try except so it might still work on windows?
+    try:
+        pixels.speak()
+    except:
+        print('Pixels Error')
+
     print(f'Speaking:: {text}')
     
     tts = gTTS(text=text, lang='en')
@@ -42,8 +56,23 @@ def speak(text):
     while mixer.music.get_busy() == True:
         continue
 
+    # See what it looks like without turning off pixels
+    # try:
+    #     pixels.off()
+    # except:
+    #     print('Pixels Error')
+
+try:
+    pixels.wakeup()
+except:
+    print("Pixels error")
 
 speak("Initilising") # test
+
+try:
+    pixels.wakeup()
+except:
+    print("Pixels error")
 
 def get_audio():
     r = sr.Recognizer()
@@ -261,6 +290,12 @@ while True:
     # TODO: See if I can bypass the 'Yo watup' and add calores straight away if calories keyword is detected
     # Add more logic for Adding based on names such as meg or dave
     if wake_word in background_speech:
+
+        try:
+            pixels.think()
+        except:
+            print('Pixels Error')
+
         print("Wakeword heard")
         speak("Yo watup")
         text = get_audio()
@@ -271,10 +306,7 @@ while True:
         else:
             speak("Sorry I didnt catch that")
 
-    
-
-
-
-
-
-
+    try:
+        pixels.off()
+    except:
+        print('Pixels Error')
