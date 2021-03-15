@@ -1,3 +1,5 @@
+#!/usr/bin/sudo /usr/bin/python
+
 # Using this article as a reference
 # https://www.techwithtim.net/tutorials/voice-assistant/wake-keyword/
 
@@ -5,28 +7,74 @@
 
 import speech_recognition as sr
 import re # Regular Expressions
-from win32com.client import Dispatch
+
+# Platform agnostic TTS using googles library
+from gtts import gTTS
+from pygame import mixer
+mixer.init() # Needs to be initilised only once
+
+# Adding library's for RESPEAKER colours
+import time
+from pixels import Pixels, pixels   # Local library needs files in repo
+from google_home_led_pattern import GoogleHomeLedPattern # Local library needs files in repo
+
+pixels.pattern = GoogleHomeLedPattern(show=pixels.show) # Initilise patern to be googles
+
 # Google sheets integration imports
 import gspread
 import datetime
 from gspread_formatting import *
 
 # Connecting to googlesheets
-gc = gspread.service_account(filename='calorieassistant-SACred.json')
+gc = gspread.service_account(filename='/home/pi/Calorie-Assistant/calorieassistant-SACred.json')
 sh = gc.open('CaloriesSheet') # Open spreadsheet
 worksheet = sh.get_worksheet(0) # First Worksheet Dave Calories 
 
 # Seeing what microphones we have available
-for index, name in enumerate(sr.Microphone.list_microphone_names()):
-    print(f"Microphone with name \"{name}\" found for `Microphone(device_index={index})`".format(index, name))
+# for index, name in enumerate(sr.Microphone.list_microphone_names()):
+#     print(f"Microphone with name \"{name}\" found for `Microphone(device_index={index})`".format(index, name))
 
 # Create Speaking function
-# This is windows only at the moment, will have to change if I deploy on pi
+# Updated to be os agnostic
+# TODO: See if there are better alternatives, she sounds slow and drunk
 def speak(text):
-    print(f'Speaking:: {text}')
-    Dispatch("SAPI.SpVoice").Speak(text)
+    # Removed buffer so now a tempary file temp.mp3 is created
 
-speak("Testing mike is working") # test
+    # Wrap in try except so it might still work on windows?
+    try:
+        pixels.speak()
+    except:
+        print('Pixels Error')
+
+    print(f'Speaking:: {text}')
+    
+    tts = gTTS(text=text, lang='en')
+    filename = 'temp.mp3'
+    tts.save(filename)
+    mixer.music.load("temp.mp3")
+    mixer.music.play()
+
+    # Loops while sound is playing
+    while mixer.music.get_busy() == True:
+        continue
+
+    # See what it looks like without turning off pixels
+    # try:
+    #     pixels.off()
+    # except:
+    #     print('Pixels Error')
+
+try:
+    pixels.wakeup()
+except:
+    print("Pixels error")
+
+speak("Initilising") # test
+
+try:
+    pixels.wakeup()
+except:
+    print("Pixels error")
 
 def get_audio():
     r = sr.Recognizer()
@@ -190,19 +238,18 @@ def calorie_events(text):
         # If digits were found
         if reg_ex:
             calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one            
-            speak(f'Adding {calorie_amount} to your daily total')            
+            speak(f'Adding {calorie_amount} calories')            
 
             # Adding Cloud integration
             cloudCalories = add_calories(int(calorie_amount))
-            speak(f'On Google Sheets you have {cloudCalories} calories logged')
-            speak(f'Total calorie consumed is now {cloudCalories}')
+            speak(f'You have {cloudCalories} calories logged')
 
         # If no digits were found
         else:
-            speak('No numbers were said, so I cant add anything sorry!')
+            speak('No numbers were said.')
     
     # Reducing calories function
-    elif ('minus' in text) or ('take away' in text) or ('takeaway' in text) or ('reduce' in text):
+    elif ('minus' in text) or ('take away' in text) or ('takeaway' in text) or ('reduce' in text) or ('remove' in text):
         print('Reducing calories')
 
         reg_ex = re.search(r'\d+', text) # search for any digits
@@ -210,21 +257,21 @@ def calorie_events(text):
         # If digits were found
         if reg_ex:
             calorie_amount = reg_ex.group(0) # If there are multiple numbers then add the first one            
-            speak(f'Taking away {calorie_amount} from your daily total')
+            speak(f'Taking away {calorie_amount} calories')
 
             # Cloud integration
             cloudCalories = remove_calories(int(calorie_amount))
-            speak(f'Total calorie consumed is now {cloudCalories}')
+            speak(f'You have {cloudCalories} calories logged')
 
         # If no digits were found
         else:
-            speak('No numbers were said, so I cant add anything sorry!')    
+            speak('No numbers were said.')    
     
     #TODO: Implement a path asking how many calories you have + how many calories remaining.
     elif ('how many' in text) or ('how much' in text):
         print('Querying how many calories have been stored')
         total_calories = query_calories()
-        speak(f'You have consumed {total_calories} calories')
+        speak(f'You have {total_calories} calories logged')
 
     #IDEA: Maybe I should have a feature asking how many more calories you can consume in a day?
     # For example if you have consummed 1800 calories then you have 200 left.
@@ -245,6 +292,12 @@ while True:
     # TODO: See if I can bypass the 'Yo watup' and add calores straight away if calories keyword is detected
     # Add more logic for Adding based on names such as meg or dave
     if wake_word in background_speech:
+
+        try:
+            pixels.think()
+        except:
+            print('Pixels Error')
+
         print("Wakeword heard")
         speak("Yo watup")
         text = get_audio()
@@ -253,12 +306,9 @@ while True:
             calorie_events(text)
             
         else:
-            speak("You didn't say any phrases I can respond to yet. Sorry!")
+            speak("Sorry I didn't catch that")
 
-    
-
-
-
-
-
-
+    try:
+        pixels.off()
+    except:
+        print('Pixels Error')
