@@ -1,4 +1,4 @@
-#!/usr/bin/sudo /usr/bin/python
+#!/usr/bin/sudo /usr/bin/python3
 
 # Using this article as a reference
 # https://www.techwithtim.net/tutorials/voice-assistant/wake-keyword/
@@ -14,6 +14,8 @@ from pygame import mixer
 mixer.init() # Needs to be initilised only once
 
 # Adding library's for RESPEAKER colours
+# The local libaries were originally found on GitHub here:
+# They have been modified to use the APA102_pi library instead of a local file https://github.com/tinue/apa102-pi#use-the-apa102-project-as-a-library
 import time
 from pixels import Pixels, pixels   # Local library needs files in repo
 from google_home_led_pattern import GoogleHomeLedPattern # Local library needs files in repo

@@ -1,5 +1,5 @@
 
-import apa102
+from apa102_pi.driver.apa102 import APA102
 import time
 import threading
 from gpiozero import LED
@@ -17,7 +17,7 @@ class Pixels:
     def __init__(self, pattern=AlexaLedPattern):
         self.pattern = pattern(show=self.show)
 
-        self.dev = apa102.APA102(num_led=self.PIXELS_N)
+        self.dev = APA102(num_led=self.PIXELS_N)
         
         self.power = LED(5)
         self.power.on()
