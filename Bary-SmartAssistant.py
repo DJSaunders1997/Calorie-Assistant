@@ -233,7 +233,13 @@ def calorie_events(text):
     """
     Function is called when the assistant detects the word 'Calories' in the command.
     """
-    if 'add' in text:
+
+    if ('how many' in text) or ('how much' in text):
+        print('Querying how many calories have been stored')
+        total_calories = query_calories()
+        speak(f'You have {total_calories} calories logged')
+
+    elif ('add' in text) or ('ad' in text) or ('at' in text):
         print('Adding calories')
         reg_ex = re.search(r'\d+', text) # search for any digits
 
@@ -269,11 +275,6 @@ def calorie_events(text):
         else:
             speak('No numbers were said.')    
     
-    #TODO: Implement a path asking how many calories you have + how many calories remaining.
-    elif ('how many' in text) or ('how much' in text):
-        print('Querying how many calories have been stored')
-        total_calories = query_calories()
-        speak(f'You have {total_calories} calories logged')
 
     #IDEA: Maybe I should have a feature asking how many more calories you can consume in a day?
     # For example if you have consummed 1800 calories then you have 200 left.
