@@ -284,8 +284,12 @@ def calorie_events(text):
 
 wake_word = 'barry' # name needs to lowercase!!
 
+print("About to enter main loop")
+speak("Listening")
+
 while True:
     print("Listening")
+    
     background_speech = get_audio()
 
     #print(f'I just heard {text}') # for debugging only
@@ -302,13 +306,21 @@ while True:
 
         print("Wakeword heard")
         speak("Yo watup")
-        text = get_audio()
 
-        if 'calorie' in text: # Changed from calories as sometimes the s isnt understood
-            calorie_events(text)
-            
+        # Allows users to bypass response by saying somthing like
+        # "Hey Bary add 200 calories"
+        # If Calories is not said then it will query what they want to do.
+        if 'calorie' in background_speech:
+            calorie_events(background_speech)
         else:
-            speak("Sorry I didn't catch that")
+            speak("Wat u want")
+            text = get_audio()
+
+            if 'calorie' in text:
+                calorie_events(text)
+                
+            else:
+                speak("Sorry I didn't catch that")
 
     try:
         pixels.off()
