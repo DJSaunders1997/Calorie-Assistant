@@ -320,7 +320,7 @@ while True:
 
         if ('megan' in background_speech) or ('meg' in background_speech):
             speak('Hi Megan')
-        else if ('dave' in background_speech) or ('david' in background_speech):
+        elif ('dave' in background_speech) or ('david' in background_speech):
             speak('Hi Dave')
         else:
             speak('Yo watup')
