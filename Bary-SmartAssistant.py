@@ -238,14 +238,16 @@ def calorie_events(text):
     """
 
     if ('megan' in text) or ('meg' in text):
+        person = 'Meg'
         worksheet = worksheet_meg
     else:
+        person = 'Dave'
         worksheet = worksheet_dave
 
     if ('how many' in text) or ('how much' in text):
         print('Querying how many calories have been stored')
         total_calories = query_calories(worksheet)
-        speak(f'You have {total_calories} calories logged')
+        speak(f'{person} has {total_calories} calories logged')
 
     elif ('add' in text) or ('ad' in text) or ('at' in text):
         print('Adding calories')
@@ -259,7 +261,7 @@ def calorie_events(text):
 
             # Adding Cloud integration
             cloudCalories = add_calories(int(calorie_amount), worksheet)
-            speak(f'You have {cloudCalories} calories logged')
+            speak(f'{person} has {cloudCalories} calories logged')
 
         # If no digits were found
         else:
@@ -278,7 +280,7 @@ def calorie_events(text):
 
             # Cloud integration
             cloudCalories = remove_calories(int(calorie_amount), worksheet)
-            speak(f'You have {cloudCalories} calories logged')
+            speak(f'{person} has {cloudCalories} calories logged')
 
         # If no digits were found
         else:
@@ -315,9 +317,15 @@ while True:
             print('Pixels Error')
 
         print("Wakeword heard")
-        speak("Yo watup")
 
-        # Allows users to bypass response by saying somthing like
+        if ('megan' in background_speech) or ('meg' in background_speech):
+            speak('Hi Megan')
+        else if ('dave' in background_speech) or ('david' in background_speech):
+            speak('Hi Dave')
+        else:
+            speak('Yo watup')
+
+        # Allows users to bypass response by saying something like
         # "Hey Bary add 200 calories"
         # If Calories is not said then it will query what they want to do.
         if 'calorie' in background_speech:
