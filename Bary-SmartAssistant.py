@@ -30,7 +30,9 @@ from gspread_formatting import *
 # Connecting to googlesheets
 gc = gspread.service_account(filename='/home/pi/Calorie-Assistant/calorieassistant-SACred.json')
 sh = gc.open('CaloriesSheet') # Open spreadsheet
-worksheet = sh.get_worksheet(0) # First Worksheet Dave Calories 
+worksheet_dave = sh.get_worksheet(0) # First Worksheet Dave Calories 
+worksheet_meg = sh.get_worksheet(1) # Second Worksheet Meg Calories
+
 
 # Seeing what microphones we have available
 # for index, name in enumerate(sr.Microphone.list_microphone_names()):
@@ -94,7 +96,7 @@ def get_audio():
 
 # Adding calories logic
 
-def add_calories(new_calories):
+def add_calories(new_calories, worksheet):
     '''
     This function is used to add rows to the attached google sheets workbook.
     It will update the spreadsheet if there is already a record with todays date there.
@@ -232,15 +234,22 @@ def query_calories():
 def calorie_events(text):
     """
     Function is called when the assistant detects the word 'Calories' in the command.
+    Looks whether to add calories for Megan, but will add calories to Dave by default.
     """
+
+    if ('megan' in text) or ('meg' in text):
+        worksheet = worksheet_meg
+    else:
+        worksheet = worksheet_dave
 
     if ('how many' in text) or ('how much' in text):
         print('Querying how many calories have been stored')
-        total_calories = query_calories()
+        total_calories = query_calories(worksheet)
         speak(f'You have {total_calories} calories logged')
 
     elif ('add' in text) or ('ad' in text) or ('at' in text):
         print('Adding calories')
+
         reg_ex = re.search(r'\d+', text) # search for any digits
 
         # If digits were found
@@ -249,7 +258,7 @@ def calorie_events(text):
             speak(f'Adding {calorie_amount} calories')            
 
             # Adding Cloud integration
-            cloudCalories = add_calories(int(calorie_amount))
+            cloudCalories = add_calories(int(calorie_amount), worksheet)
             speak(f'You have {cloudCalories} calories logged')
 
         # If no digits were found
@@ -268,7 +277,7 @@ def calorie_events(text):
             speak(f'Taking away {calorie_amount} calories')
 
             # Cloud integration
-            cloudCalories = remove_calories(int(calorie_amount))
+            cloudCalories = remove_calories(int(calorie_amount), worksheet)
             speak(f'You have {cloudCalories} calories logged')
 
         # If no digits were found
