@@ -14,9 +14,12 @@ db=client.CaloriesDB
 
 
 def get_daily_total(person):
-    # TODO do the aggregation on Mongos side when I figure out how it all works
-    # Will query the MongoDB for the specified person and return 0 if no calories have been added, or return the current total
+       '''
+    This function will return the total calories from all calories events with todays date for specified person.
+    If the event doesn't exist then create it with 0 calories.
 
+    TODO: do the aggregation on Mongos side when I figure out how it all works
+    '''
     today = datetime.today().strftime("%Y-%m-%d")
 
     # Query to return all info for person we want and with calories for today 
@@ -39,8 +42,13 @@ def get_daily_total(person):
 
 
 def add_calories(person, amount):
-    # Adds a new calorie event to the specified person with the current timestamp and specified amount of calories  
-    # Returns true if successful
+    '''
+    This function is used to add a new calorie event to the Connected MongoDB Database.
+    A new item is added to the calorie_events array for the specified person.
+    This item is a dict with a timestamp and the amount of calories to add.
+    Note to take away calories this function is also used, but with a negative amount.
+    Returns True if successful.
+    '''
 
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # In format like '2021-04-22 11:26:55'
     new_calories_event = {'timestamp': current_time, 'calories': amount}
