@@ -17,9 +17,7 @@ Voice assistant to help track calories throughout the day
 
 - Text to voice on raspberry pi used win32com.client import Dispatch
 
-- Google sheets with Python integration to store calories over time.
-  Link to speadsheet https://docs.google.com/spreadsheets/d/1bQCi2DsnIFFSZZ9wHnXBtvhaKgvmp9mG3t918Gwz39o/edit#gid=0 .
-  Linked using the gspread library # https://github.com/burnash/gspread , https://gspread.readthedocs.io/en/latest/
+- Backend Database used is now MongoDB for experience. MongoDB Atlas has a free tier with up to 500MB of storage. Will never fill that so feels like a good solution.
 
 - If there are PyAudio issues on Pi then follow this forum for fixes https://www.raspberrypi.org/forums/viewtopic.php?p=1242333 
 
