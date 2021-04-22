@@ -59,4 +59,3 @@ def add_calories(person, amount):
 
 	return res.acknowledged
 
-add_calories('Meg', 450)
