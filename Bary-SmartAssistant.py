@@ -141,7 +141,7 @@ def add_calories(new_calories, worksheet):
 
     return(total_calories)    ## Return this so Barry can say how many calories I have left
 
-def remove_calories(minus_calories):
+def remove_calories(minus_calories, worksheet):
     '''
     This function will reduce the total calories stored on sheets if the row exists.
     It will update the spreadsheet if there is already a record with todays date there.
@@ -188,7 +188,7 @@ def remove_calories(minus_calories):
 
     return(total_calories)    ## Return this so Barry can say how many calories I have left
 
-def query_calories():
+def query_calories(worksheet):
     '''
     #TODO: change add calories logic
     This function will return the the calories stored on sheets if the row exists.
