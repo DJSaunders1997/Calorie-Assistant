@@ -1,3 +1,6 @@
+# Custom module created by me to abstract away the details of talking to the database.
+# Connects to a MongoDB Atlas cloud based database
+
 from pymongo import MongoClient
 from datetime import datetime
 
