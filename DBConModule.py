@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 from datetime import datetime
+import os
 
 # Get password from local file not published to GitHub
-f = open("password.txt", "r")
-password = f.read()
+
+password = os.environ.get('MONGO_PW')
 
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
 client = MongoClient(f'mongodb+srv://user:{password}@cluster0.ad9pz.mongodb.net/test')
@@ -14,7 +15,6 @@ def get_daily_total(person):
 	'''
 	This function will return the total calories from all calories events with todays date for specified person.
 	If the event doesn't exist then create it with 0 calories.
-
 	TODO: do the aggregation on Mongos side when I figure out how it all works
 	'''
 	
