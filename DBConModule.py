@@ -7,7 +7,7 @@ import os
 password = os.environ.get('MONGO_PW')
 
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
-client = MongoClient(f'mongodb+srv://user:{password}@cluster0.ad9pz.mongodb.net/test')
+client = MongoClient(f'mongodb+srv://user:{password}@cluster0.ad9pz.mongodb.net/myFirstDatabase?retryWrites=true&w=majority')
 db=client.CaloriesDB
 
 
