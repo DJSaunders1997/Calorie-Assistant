@@ -23,7 +23,10 @@ from google_home_led_pattern import GoogleHomeLedPattern # Local library needs f
 pixels.pattern = GoogleHomeLedPattern(show=pixels.show) # Initilise patern to be googles
 
 # Replace GoogleSheets imports with Custom MongoDB Module
+# Current date from datetime module needed when using module 
 import DBConModule
+import datetime
+
 
 # Seeing what microphones we have available
 # for index, name in enumerate(sr.Microphone.list_microphone_names()):
@@ -91,6 +94,9 @@ def calorie_events(text):
     Looks whether to add calories for Megan, but will add calories to Dave by default.
     """
 
+    # Update datetime so that it will still be up to date for multiple days without restarting script
+    today = datetime.datetime.today()
+
     if ('megan' in text) or ('meg' in text):
         person = 'Meg'
     else:
@@ -98,7 +104,7 @@ def calorie_events(text):
 
     if ('how many' in text) or ('how much' in text):
         print('Querying how many calories have been stored')
-        total_calories = DBConModule.get_daily_total(person)
+        total_calories = DBConModule.get_daily_total(person, today)
         speak(f'{person} has {total_calories} calories logged')
 
     elif ('add' in text) or ('ad' in text) or ('at' in text):
@@ -112,8 +118,8 @@ def calorie_events(text):
             speak(f'Adding {calorie_amount} calories')            
 
             # Cloud integration
-            DBConModule.add_calories(person, int(calorie_amount))
-            total_calories = DBConModule.get_daily_total(person)
+            DBConModule.add_calories(person, today, int(calorie_amount))
+            total_calories = DBConModule.get_daily_total(person, today)
 
             speak(f'{person} has {total_calories} calories logged')
 
@@ -133,8 +139,8 @@ def calorie_events(text):
             speak(f'Taking away {calorie_amount} calories')
 
             # Adding Cloud integration
-            DBConModule.add_calories(person, -int(calorie_amount))
-            total_calories = DBConModule.get_daily_total(person)
+            DBConModule.add_calories(person, today, -int(calorie_amount))
+            total_calories = DBConModule.get_daily_total(person, today)
 
             speak(f'{person} has {total_calories} calories logged')
 
