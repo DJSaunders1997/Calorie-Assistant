@@ -1,5 +1,5 @@
 # Calorie-Assistant
-Voice assistant to help track calories throughout the day
+Voice assistant to help track calories throughout the day.
 
 
 ## All Packages and Programs used:
@@ -20,6 +20,8 @@ Voice assistant to help track calories throughout the day
 - Backend Database used is now MongoDB for experience. MongoDB Atlas has a free tier with up to 500MB of storage. Will never fill that so feels like a good solution.
 
 - If there are PyAudio issues on Pi then follow this forum for fixes https://www.raspberrypi.org/forums/viewtopic.php?p=1242333 
+
+Calories from the Pi are also displayed on the related Calorie Website https://github.com/DJSaunders1997/Calorie-Website
 
 Name Ideas:
 
